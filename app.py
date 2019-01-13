@@ -1,20 +1,23 @@
 import os
+import os.path
 from flask import Flask, flash, request, redirect, url_for
 from flask import send_from_directory, render_template, session
+from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '/app/uploads'
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
-SECRET_KEY = 'viadelamesa'
+SECRET_KEY = 'viadelamesatemecula'
 
 app = Flask(__name__)
+files_index = AutoIndex(app, os.path.curdir + '/files', add_url_rules=False)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 4 * 1024 * 1024
 app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():
-    return 'Coming soon...'
+    return 'Main page coming soon...'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -43,22 +46,23 @@ def upload_file():
             return redirect(request.url)
         # handle request
         filename = secure_filename(file.filename)
+        # TODO fullpath = 'example.com/files' + userpin + '/' + filename
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         return render_template('success.html', pin=userpin, filename=filename)
     else: # if GET
         return render_template('upload.html')
 
-@app.route('/files/<pin>')
-def show_files(pin):
-
-    return 'Someday this will list files for PIN: %s...' % pin
-
 @app.route('/files')
+@app.route('/files/')
 def default_files():
     if 'pin' in session:
         return redirect('/files/' + session['pin'])
     else:
-        return 'No files uploaded yet this session.'
+        return 'No files uploaded in this session.'
+
+@app.route('/files/<path:path>')
+def autoindex(path='.'):
+    return files_index.render_autoindex(path)
 
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
