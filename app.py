@@ -48,12 +48,20 @@ def upload_file():
         # handle request
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return upload_ack(request)
-    return render_template('upload.html')
+        return render_template('success.html')
+    else: # if GET
+        return render_template('upload.html')
 
-@app.route('/uploads/<pin>')
+@app.route('/files/<pin>')
 def show_files(pin):
-    return 'Someday this will list files for user $s...' % pin
+    return 'Someday this will list files for PIN: %s...' % pin
+
+@app.route('/files')
+def default_files():
+    if 'pin' in session:
+        return redirect('/files/' + session['pin'])
+    else:
+        return 'No files uploaded yet this session.'
 
 # @app.route('/uploads/<filename>')
 # def uploaded_file(filename):
