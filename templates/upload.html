@@ -4,6 +4,7 @@
 
   {% with messages = get_flashed_messages() %}
   {% if messages %}
+  <h3>Errors</h3>
   <ul class=flashes>
     {% for message in messages %}
     <li>{{ message }}</li>
@@ -12,11 +13,10 @@
   {% endif %}
   {% endwith %}
 
-  <h2>Flash message test</h2>
-  <p>This is a test of some junk.</p>
-
+  {% if 'pin' in session %}
+  <p>PIN: {{ session['pin'] }}</p>
+  {% endif %}
   <form method=post enctype=multipart/form-data>
-    <p>User PIN:
     <input type=text name=pin></p>
     <p><input type=file name=file></p>
     <input type=submit value=Upload>

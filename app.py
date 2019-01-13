@@ -1,6 +1,6 @@
 import os
 from flask import Flask, flash, request, redirect, url_for
-from flask import send_from_directory, render_template
+from flask import send_from_directory, render_template, session
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '/app/uploads'
@@ -21,33 +21,43 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def upload_ack(request):
-    return ('Successfully uploaded %s under PIN: %s.'
-        % (request.files['file'].filename, request.userid))
+    return ('<h3>Successfully uploaded %s under PIN: %s<h3>'
+        % (request.files['file'].filename, request.form['pin']))
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
+        # check for errors...
+        problems = 0
         if 'file' not in request.files:
-            flash('No file part')
+            flash('No file selected')
+            problems += 1
+        else:
+            file = request.files['file']
+            if not allowed_file(file.filename):
+                flash('Bad file name!')
+                problems += 1
+        userpin = request.form['pin']
+        if len(userpin) < 6:
+            flash('PIN is too short!')
+            problems += 1
+        else:
+            session['pin'] = userpin
+        if problems > 0:
             return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        dump(request)
-        if file.filename == '':
-            flash('No selected file!')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            # return redirect(url_for('uploaded_file', filename=filename))
-            return upload_ack(request)
+        # handle request
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return upload_ack(request)
     return render_template('upload.html')
 
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@app.route('/uploads/<pin>')
+def show_files(pin):
+    return 'Someday this will list files for user $s...' % pin
+
+# @app.route('/uploads/<filename>')
+# def uploaded_file(filename):
+#    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 80, debug = True)
