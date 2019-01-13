@@ -13,11 +13,14 @@
   {% endif %}
   {% endwith %}
 
-  {% if 'pin' in session %}
-  <p>PIN: {{ session['pin'] }}</p>
-  {% endif %}
   <form method=post enctype=multipart/form-data>
-    <input type=text name=pin></p>
+    <p>User PIN:
+    {% if 'pin' in session %}
+      <input type=text name=pin value={{ session['pin'] }}>
+    {% else %}
+      <input type=text name=pin>
+    {% endif %}
+    </p>
     <p><input type=file name=file></p>
-    <input type=submit value=Upload>
+    <input type=submit value='Upload File'>
   </form>
