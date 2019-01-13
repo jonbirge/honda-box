@@ -20,10 +20,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def upload_ack(request):
-    return ('<h3>Successfully uploaded %s under PIN: %s<h3>'
-        % (request.files['file'].filename, request.form['pin']))
-
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -48,12 +44,13 @@ def upload_file():
         # handle request
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        return render_template('success.html')
+        return render_template('success.html', pin=userpin, filename=filename)
     else: # if GET
         return render_template('upload.html')
 
 @app.route('/files/<pin>')
 def show_files(pin):
+
     return 'Someday this will list files for PIN: %s...' % pin
 
 @app.route('/files')

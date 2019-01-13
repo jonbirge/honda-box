@@ -1,4 +1,4 @@
-# this is an official Python runtime, used as the parent image
+# this is an official Python runtime
 FROM python:3.7-slim
 
 # set the working directory in the container to /app
