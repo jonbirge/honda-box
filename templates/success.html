@@ -1,5 +1,7 @@
 <!doctype html>
   <title>Upload success</title>
   <h2>Image uploaded</h2>
-  <p>Successfully uploaded file {{ filename }} under PIN: {{ pin }}</p>
+  <p>Successfully uploaded file {{ filename }}</p>
+  <p>Your processed files will be available at
+    <a href="http://localhost/files/{{ pin }}">http://localhost/files/{{ pin }}</a></p>
   <p><a href="upload">Upload another file</a></p>
