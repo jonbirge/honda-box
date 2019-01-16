@@ -60,7 +60,7 @@ def upload_file():
         return render_template('success.html', pin=userpin, filename=filename)
     else: # if GET
         if not 'pin' in session:
-            session['pin'] = random_pin() # TODO make random hash
+            session['pin'] = random_pin()
         return render_template('upload.html')
 
 @app.route('/files')
@@ -74,10 +74,6 @@ def default_files():
 @app.route('/files/<path:path>')
 def autoindex(path='.'):
     return files_index.render_autoindex(path)
-
-# @app.route('/uploads/<filename>')
-# def uploaded_file(filename):
-#    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 80, debug = True)
