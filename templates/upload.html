@@ -1,6 +1,6 @@
 <!doctype html>
   <title>Upload background picture</title>
-  <h2>Image upload</h2>
+  <h2>Background image upload</h2>
 
   <form method=post enctype=multipart/form-data>
     <p>User PIN:
@@ -10,8 +10,17 @@
       <input type=text name=pin>
     {% endif %}
     </p>
-    <p><input type=file name=file></p>
-    <input type=submit value='Upload File'>
+    <p>Picture: <input type=file name=file></p>
+    <p>Honda model: <select name="model">
+      {% for car in cars %}
+      {% if car == thecar %}
+      <option selected>{{ car }}</option>
+      {% else %}
+      <option>{{ car }}</option>
+      {% endif %}
+      {% endfor %}
+    </select></p>
+    <p><input type=submit value='Process File'></p>
   </form>
 
   {% with messages = get_flashed_messages() %}

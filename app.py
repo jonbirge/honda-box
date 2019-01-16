@@ -4,11 +4,25 @@ from flask import Flask, flash, request, redirect, url_for
 from flask import send_from_directory, render_template, session
 from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
+from PIL import Image
 
 UPLOAD_BASE = '/app/files/'
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
 SECRET_KEY = 'viadelamesatemeculaca'
 PIN_DIGITS = 10
+RES_LIST = {
+    "720p": (1280, 720),
+    "WGA": (800, 480)
+}
+HONDA_LIST = {
+    "Civic": "WGA",
+    "Clarity": "WGA",
+    "2018-later Accord": "720p",
+    "Pre-2018 Accord": "WGA",
+    "2019 Pilot": "720p",
+    "Pre-2019 Pilot": "WGA"
+}
+DEFAULT_RES = "WGA"
 
 app = Flask(__name__)
 files_index = AutoIndex(app, os.path.curdir + '/files', add_url_rules=False)
@@ -29,8 +43,10 @@ def random_pin():
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check for errors...
+    if request.method == 'POST': # POST method handler
+        ### check for errors...
+        car = request.form['model']
+        session['car'] = car
         problems = 0
         if 'file' not in request.files:
             flash('No file selected')
@@ -48,20 +64,31 @@ def upload_file():
             session['pin'] = userpin
         if problems > 0:
             return redirect(request.url)
-        # handle request
+
+        ### handle request
         filename = secure_filename(file.filename)
-        # TODO fullpath = 'example.com/files' + userpin + '/' + filename
         fullpath = os.path.join(app.config['UPLOAD_BASE'], userpin)
         try:
             os.mkdir(fullpath)
         except:
             pass  # we don't care!
-        file.save(os.path.join(fullpath, filename))
-        return render_template('success.html', pin=userpin, filename=filename)
-    else: # if GET
+        ### process file
+        tmpfile = os.path.join('/tmp/', filename)
+        finalfile = os.path.join(fullpath, filename)
+        file.save(tmpfile)  # tmp file
+        origimage = Image.open(tmpfile)
+        width, height = RES_LIST[HONDA_LIST[car]]
+        croppedimage = origimage.crop((0, 0, width, height))
+        croppedimage.save(finalfile, 'JPEG')
+        return render_template('success.html', pin=userpin, filename=filename, car=car)
+    else: # GET method handler
         if not 'pin' in session:
             session['pin'] = random_pin()
-        return render_template('upload.html')
+        if not 'car' in session:
+            session['car'] = next(iter(HONDA_LIST.keys()))
+        carlist = list(HONDA_LIST.keys())
+        sessioncar = session['car']
+        return render_template('upload.html', cars=carlist, thecar=sessioncar)
 
 @app.route('/files')
 @app.route('/files/')
