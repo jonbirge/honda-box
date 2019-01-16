@@ -1,12 +1,12 @@
-write files to specific directory
-automatically generate PIN
-reveal URL after upload
+crop files to clarity size
 crop files according to selected car type
 resample files according to selected car type
 make main page
-add default backgrounds
+add default backgrounds static downloads
 add redis db to track hits
 make video on how to hack car
 implement as service stack using compose
 deploy to cloud server
+cron job to clean up old files
+use Flask-Uploads extension
 make iOS app
