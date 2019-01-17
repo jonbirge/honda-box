@@ -8,7 +8,7 @@ from PIL import Image
 from autoscale import auto_scale
 import redis
 
-UPLOAD_BASE = '/app/files/'
+UPLOAD_BASE = '/data/'
 CONTENT_LENGTH = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
 SECRET_KEY = 'viadelamesatemeculaca'
@@ -25,7 +25,7 @@ HONDA_RES = {
 # app configuration
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
-files_index = AutoIndex(app, os.path.curdir + '/files', add_url_rules=False)
+files_index = AutoIndex(app, '/data', add_url_rules=False)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
 app.config['MAX_CONTENT_LENGTH'] = CONTENT_LENGTH
 app.secret_key = SECRET_KEY
