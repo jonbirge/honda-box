@@ -6,6 +6,7 @@ from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
 from PIL import Image
 from autoscale import auto_scale
+import redis
 
 UPLOAD_BASE = '/app/files/'
 CONTENT_LENGTH = 10 * 1024 * 1024
@@ -23,6 +24,7 @@ HONDA_RES = {
 
 # app configuration
 app = Flask(__name__)
+cache = redis.Redis(host='redis', port=6379)
 files_index = AutoIndex(app, os.path.curdir + '/files', add_url_rules=False)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
 app.config['MAX_CONTENT_LENGTH'] = CONTENT_LENGTH
@@ -30,6 +32,7 @@ app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():
+    cache.incr('main_gets')
     return 'Main page coming soon!'
 
 def allowed_file(filename):
@@ -42,6 +45,7 @@ def random_pin():
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST': # POST method handler
+        cache.incr('upload_tries')
         ### check for errors...
         car = request.form['model']
         session['car'] = car
@@ -77,15 +81,24 @@ def upload_file():
         origimage = Image.open(tmpfile)
         scaledimage = auto_scale(origimage, HONDA_RES[car])
         scaledimage.save(finalfile, 'JPEG')
+        cache.incr('uploads')
         return render_template('success.html', pin=userpin, filename=filename, car=car)
     else: # GET method handler
+        cache.incr('upload_gets')
         if not 'pin' in session:
             session['pin'] = random_pin()
         if not 'car' in session:
             session['car'] = next(iter(HONDA_RES.keys()))
         carlist = list(HONDA_RES.keys())
-        sessioncar = session['car']
-        return render_template('upload.html', cars=carlist, thecar=sessioncar)
+        return render_template('upload.html',
+            cars=carlist, thecar=session['car'], pin=session['pin'])
+
+@app.route('/stats')
+def stats():
+    return render_template('stats.html',
+        statreads=cache.incr('stat_gets'),
+        mainloads=cache.get('main_gets'),
+        uploads=cache.get('uploads'))
 
 @app.route('/files')
 @app.route('/files/')
@@ -93,7 +106,7 @@ def default_files():
     if 'pin' in session:
         return redirect('/files/' + session['pin'])
     else:
-        return 'No files uploaded in this session.'
+        return 'No files uploaded yet.'
 
 @app.route('/files/<path:path>')
 def autoindex(path='.'):

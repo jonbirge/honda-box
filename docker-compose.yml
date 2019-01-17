@@ -1,0 +1,16 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "80:80"
+    volumes:
+     - .:/app/
+     - honda_files:/app/files
+  redis:
+    image: "redis:alpine"
+    volumes:
+     - redis_data:/data
+volumes:
+  honda_files:
+  redis_data:

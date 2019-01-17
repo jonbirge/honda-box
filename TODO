@@ -1,13 +1,17 @@
 make main page
+use different volume for files
+use hashed name for uploads
+allow overwriting files
+implement as service stack using compose
 add redis db to track hits
 put image logic into separate python module
-make video on how to hack car
-programatically generate hostname
-implement as service stack using compose
+programmatically generate hostname
 deploy to cloud server
+make video on how to hack car
 add default backgrounds static downloads
 cron job to clean up old files
 use JS file cropping interface
 use Flask-Uploads extension
 generate pure color
 make iOS app
+use tmpfs volume for uploads?

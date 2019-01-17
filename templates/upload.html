@@ -4,11 +4,7 @@
 
   <form method=post enctype=multipart/form-data>
     <p>User PIN:
-    {% if 'pin' in session %}
-      <input type=text name=pin value={{ session['pin'] }}>
-    {% else %}
-      <input type=text name=pin>
-    {% endif %}
+      <input type=text name=pin value={{ pin }}>
     </p>
     <p>Picture: <input type=file name=file></p>
     <p>Honda model: <select name="model">
