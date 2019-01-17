@@ -70,14 +70,19 @@ def upload_file():
         ### handle request
         filename = secure_filename(file.filename)
         fullpath = os.path.join(app.config['UPLOAD_BASE'], userpin)
+        uploadpath = os.path.join(fullpath, 'orig')
         try:
             os.mkdir(fullpath)
         except:
             pass  # we don't care!
+        try:
+            os.mkdir(uploadpath)
+        except:
+            pass
         ### process file
-        tmpfile = os.path.join('/tmp/', filename)
+        tmpfile = os.path.join(uploadpath, filename)
         finalfile = os.path.join(fullpath, filename)
-        file.save(tmpfile)  # tmp file
+        file.save(tmpfile)
         origimage = Image.open(tmpfile)
         scaledimage = auto_scale(origimage, HONDA_RES[car])
         scaledimage.save(finalfile, 'JPEG')
