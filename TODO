@@ -1,8 +1,10 @@
-remove temporary originals
 make main page
-use hashed name for uploads
+remove temporary originals
+use hashed folder name for uploads
+use tmpfs volume for /tmp
 allow overwriting files
 programmatically generate hostname
+implement behind WSGI server
 deploy to cloud server
 make video on how to hack car
 add default backgrounds static downloads
@@ -11,4 +13,4 @@ use JS file cropping interface
 use Flask-Uploads extension
 generate pure color
 make iOS app
-use tmpfs volume for uploads?
+implement behind nginx serving statics

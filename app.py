@@ -33,7 +33,7 @@ app.secret_key = SECRET_KEY
 @app.route('/')
 def index():
     cache.incr('main_gets')
-    return 'Main page coming soon!'
+    return render_template('index.html')
 
 def allowed_file(filename):
     return '.' in filename and \
