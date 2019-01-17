@@ -5,12 +5,14 @@ services:
     ports:
      - "80:80"
     volumes:
-     - .:/app/
-     - honda_files:/app/files
+     - ${DEBUGMOUNT}
+     #- honda_box:/data
+    tmpfs:
+     - /tmp
   redis:
     image: "redis:alpine"
     volumes:
      - redis_data:/data
 volumes:
-  honda_files:
+  #honda_box:
   redis_data:

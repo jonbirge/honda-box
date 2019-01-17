@@ -1,9 +1,4 @@
-make main page
-remove temporary originals
-use hashed folder name for uploads
-use tmpfs volume for /tmp
-allow overwriting files
-programmatically generate hostname
+programmatically generate hostname in success.html
 implement behind WSGI server
 deploy to cloud server
 make video on how to hack car
