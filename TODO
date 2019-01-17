@@ -1,12 +1,13 @@
-scale and crop files according to selected car type
-add default backgrounds static downloads
 make main page
 add redis db to track hits
 put image logic into separate python module
 make video on how to hack car
+programatically generate hostname
 implement as service stack using compose
 deploy to cloud server
+add default backgrounds static downloads
 cron job to clean up old files
 use JS file cropping interface
 use Flask-Uploads extension
+generate pure color
 make iOS app
