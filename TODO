@@ -1,11 +1,13 @@
 programmatically generate hostname in success.html
 implement behind WSGI server
 deploy to cloud server
-make video on how to hack car
-add default backgrounds static downloads
+have success documents on upload page to save step
+show cropped document on success page
+add default backgrounds to static downloads
 cron job to clean up old files
 use JS file cropping interface
 use Flask-Uploads extension
 generate pure color
 make iOS app
 implement behind nginx serving statics
+make video on how to hack car

@@ -1,4 +1,4 @@
-flask==1.0.2
+flask
 Flask-AutoIndex
 Pillow
 redis

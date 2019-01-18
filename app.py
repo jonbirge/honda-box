@@ -86,7 +86,7 @@ def upload_file():
         origimage = Image.open(tmpfile)
         scaledimage = auto_scale(origimage, HONDA_RES[car])
         scaledimage.save(finalfile, 'JPEG')
-        # os.remove(tmpfile)
+        os.remove(tmpfile)
         cache.incr('uploads')
         return render_template('success.html', pin=userpin, filename=filename, car=car)
     else: # GET method handler
