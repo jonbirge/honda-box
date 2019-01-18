@@ -3,7 +3,6 @@ implement behind WSGI server
 deploy to cloud server
 have success documents on upload page to save step
 show cropped document on success page
-add default backgrounds to static downloads
 cron job to clean up old files
 use JS file cropping interface
 use Flask-Uploads extension

@@ -6,7 +6,7 @@ services:
      - "80:80"
     volumes:
      - ${DEBUGMOUNT}
-     - honda_box:/data
+     - honda_box:/data/boxes
     tmpfs:
      - /tmp
   redis:

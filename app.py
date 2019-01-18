@@ -5,10 +5,10 @@ from flask import send_from_directory, render_template, session
 from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
 from PIL import Image
-from autoscale import auto_scale
 import redis
+from autoscale import auto_scale
 
-UPLOAD_BASE = '/data/'
+UPLOAD_BASE = '/data/boxes/'
 CONTENT_LENGTH = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
 SECRET_KEY = 'viadelamesatemeculaca'
@@ -25,10 +25,10 @@ HONDA_RES = {
 # app configuration
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
-files_index = AutoIndex(app, '/data', add_url_rules=False)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
 app.config['MAX_CONTENT_LENGTH'] = CONTENT_LENGTH
 app.secret_key = SECRET_KEY
+files_index = AutoIndex(app, '/data', add_url_rules=False)
 
 @app.route('/')
 def index():
@@ -106,15 +106,22 @@ def stats():
         mainloads=cache.get('main_gets'),
         uploads=cache.get('uploads'))
 
-@app.route('/files')
-@app.route('/files/')
+@app.route('/box')
+@app.route('/box/')
 def default_files():
     if 'pin' in session:
-        return redirect('/files/' + session['pin'])
+        return redirect('/data/boxes/' + session['pin'])
     else:
         return 'No files uploaded yet.'
 
-@app.route('/files/<path:path>')
+@app.route('/data')
+@app.route('/data/')
+@app.route('/data/boxes')
+@app.route('/data/boxes/')
+def static_files():
+    return redirect('.')
+
+@app.route('/data/<path:path>')
 def autoindex(path='.'):
     return files_index.render_autoindex(path)
 
