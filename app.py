@@ -1,6 +1,6 @@
 import os
 from random import randint
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect
 from flask import send_from_directory, render_template, session
 from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
@@ -101,12 +101,21 @@ def upload_file():
         return render_template('upload.html',
             cars=carlist, thecar=session['car'], pin=session['pin'])
 
+def redisint(cache, key):
+    getkey = cache.get(key)
+    if getkey is None:
+        return 0
+    else:
+        return int(getkey)
+
 @app.route('/stats')
 def stats():
+    mains = redisint(cache, 'main_gets')
+    uploads = redisint(cache, 'uploads')
+    tries = redisint(cache, 'upload_gets')
     return render_template('stats.html',
-        statreads=cache.incr('stat_gets'),
-        mainloads=cache.get('main_gets'),
-        uploads=cache.get('uploads'))
+        statreads=cache.incr('stat_gets'), mainloads=mains,
+        uploads=uploads, tries=tries)
 
 @app.route('/box')
 @app.route('/box/')
