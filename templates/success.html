@@ -1,8 +1,15 @@
 <!doctype html>
-  <title>Upload success</title>
-  <h1><a href="/">Honda Box</a></h1>
-  <h2>Image uploaded</h2>
-  <p>Successfully uploaded and processed {{ filename }} as a {{ car }} background.</p>
-  <p>Your files will be available for a limited time at
-    <a href="http://localhost/files/{{ pin }}">http://localhost/files/{{ pin }}</a></p>
-  <p><a href="upload">Upload another file</a></p>
+<title>Upload success</title>
+<h1><a href="/">Honda Box</a></h1>
+<h2>Image uploaded</h2>
+<p>Successfully uploaded and processed <b>{{ filename }}</b> as a
+  <b>{{ car }}</b> background.
+</p>
+<p>Your files are available at
+  <a href="{{ url }}">{{ url }}</a>
+</p>
+<p>Write this URL down if you plan to download your backgrounds directly
+  to your car via the in-car browser.
+</p>
+<p><a href="upload">Upload another file</a>
+</p>

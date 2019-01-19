@@ -1,6 +1,9 @@
-programmatically generate hostname in success.html
-implement behind WSGI server
 deploy to cloud server
+get test server working behind proxy
+add gunicorn to container
+update index.html instructions
+advertise on Facebook
+
 have success documents on upload page to save step
 show cropped document on success page
 cron job to clean up old files

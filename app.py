@@ -88,7 +88,9 @@ def upload_file():
         scaledimage.save(finalfile, 'JPEG')
         os.remove(tmpfile)
         cache.incr('uploads')
-        return render_template('success.html', pin=userpin, filename=filename, car=car)
+        boxurl = request.url_root + 'data/boxes/' + userpin
+        return render_template('success.html',
+            filename=filename, car=car, url=boxurl)
     else: # GET method handler
         cache.incr('upload_gets')
         if not 'pin' in session:
