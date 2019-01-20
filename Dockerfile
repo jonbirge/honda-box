@@ -21,4 +21,4 @@ RUN mv default /data/static
 EXPOSE 8000
 
 # execute the Flask app
-CMD ["gunicorn", "--workers=2", -b", "0.0.0.0:8000", "app:app"]
+CMD ["gunicorn", "--workers=2", "-b 0.0.0.0:8000", "app:app"]
