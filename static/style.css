@@ -1,9 +1,9 @@
 body {
-  background-color: #202020;
+  background-color: #202220;
   color: lightgray;
   font-family: sans-serif;
   margin: 32px;
-  font-size: 130%;
+  font-size: 120%;
 }
 a { color: skyblue; }
 h1, h2, h3 { color: white; }
@@ -20,8 +20,8 @@ input {
 select {
   padding: 8px 16px;
   margin: 4px;
-  border: none;
   border-radius: 4px;
+  border: none;
   background-color: #404040;
   color: white;
   font-size: 100%;
@@ -30,4 +30,29 @@ input[type=submit] {
   padding: 12px 20px;
   font-weight: bold;
   background-color: #407040;
+  font-size: 100%;
+  border-radius: 4px;
+}
+@media only screen and (max-device-width: 640px) {
+    body {
+	background-color: black;
+	font-size: 250%;
+    }
+    input {
+	padding: 8px;
+	font-size: 100%;
+	width: 100%;
+    }
+    select {
+	padding: 8px 16px;
+	background-color: #000000;
+	font-size: 100%;
+    }
+    input[type=submit] {
+	padding: 16px 24px;
+	font-weight: bold;
+	background-color: #407040;
+	border-radius: 2px;
+	font-size: 100%;
+    }
 }
