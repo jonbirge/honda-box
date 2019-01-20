@@ -1,10 +1,10 @@
 update index.html instructions
 add minimal CSS to work better on phone
-configure gunicorn for logging in container
+implement with final domain
+contact info and domain e-mail (webmaster)
 advertise on Facebook
 
 try putting gunicorn in separate container
-have success documents on upload page to save step
 show cropped document on success page
 cron job to clean up old files
 use JS file cropping interface
@@ -13,3 +13,5 @@ generate pure color
 make iOS app
 implement behind nginx serving statics
 make video on how to hack car
+multiple uploads
+download zip file of directory
