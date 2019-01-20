@@ -3,6 +3,7 @@ add minimal CSS to work better on phone
 configure gunicorn for logging in container
 advertise on Facebook
 
+try putting gunicorn in separate container
 have success documents on upload page to save step
 show cropped document on success page
 cron job to clean up old files
