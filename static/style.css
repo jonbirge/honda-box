@@ -1,0 +1,33 @@
+body {
+  background-color: #202020;
+  color: lightgray;
+  font-family: sans-serif;
+  margin: 32px;
+  font-size: 130%;
+}
+a { color: skyblue; }
+h1, h2, h3 { color: white; }
+input {
+  padding: 6px;
+  margin: 4px;
+  background-color: #404040;
+  box-sizing: border-box;
+  border: 2px solid white;
+  border-radius: 4px;
+  color: white;
+  font-size: 100%;
+}
+select {
+  padding: 8px 16px;
+  margin: 4px;
+  border: none;
+  border-radius: 4px;
+  background-color: #404040;
+  color: white;
+  font-size: 100%;
+}
+input[type=submit] {
+  padding: 12px 20px;
+  font-weight: bold;
+  background-color: #408040;
+}
