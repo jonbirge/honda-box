@@ -1,7 +1,6 @@
-deploy to cloud server
-get test server working behind proxy
-add gunicorn to container
 update index.html instructions
+add minimal CSS to work better on phone
+configure gunicorn for logging in container
 advertise on Facebook
 
 have success documents on upload page to save step

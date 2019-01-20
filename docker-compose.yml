@@ -3,9 +3,9 @@ services:
   web:
     build: .
     ports:
-     - "5000:5000"
+     - "127.0.0.1:8000:8000"
     volumes:
-     - ${DEBUGMOUNT}
+     - ./:/app/
      - honda_box:/data/boxes
     tmpfs:
      - /tmp

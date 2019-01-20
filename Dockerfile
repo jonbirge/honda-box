@@ -17,8 +17,8 @@ COPY . /app
 RUN mkdir /data
 RUN mv default /data/static
 
-# unblock port 80 for the Flask app
-EXPOSE 80
+# unblock port 8000 for the Flask app
+EXPOSE 8000
 
 # execute the Flask app
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--workers=2", -b", "0.0.0.0:8000", "app:app"]
