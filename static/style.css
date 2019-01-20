@@ -34,25 +34,25 @@ input[type=submit] {
   border-radius: 4px;
 }
 @media only screen and (max-device-width: 640px) {
-    body {
-	background-color: black;
-	font-size: 250%;
-    }
-    input {
-	padding: 8px;
-	font-size: 100%;
-	width: 100%;
-    }
-    select {
-	padding: 8px 16px;
-	background-color: #000000;
-	font-size: 100%;
-    }
-    input[type=submit] {
-	padding: 16px 24px;
-	font-weight: bold;
-	background-color: #407040;
-	border-radius: 2px;
-	font-size: 100%;
-    }
+  body {
+    background-color: black;
+    font-size: 250%;
+  }
+  input {
+    padding: 8px;
+    font-size: 100%;
+    width: 100%;
+  }
+  select {
+    padding: 8px 16px;
+    background-color: #000000;
+    font-size: 100%;
+  }
+  input[type=submit] {
+    padding: 16px 24px;
+    font-weight: bold;
+    background-color: #407040;
+    border-radius: 2px;
+    font-size: 100%;
+  }
 }

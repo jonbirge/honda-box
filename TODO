@@ -1,8 +1,6 @@
-implement with final domain
 contact info and domain e-mail (webmaster)
 advertise on Facebook
 
-try putting gunicorn in separate container
 show cropped document on success page
 cron job to clean up old files
 use JS file cropping interface
