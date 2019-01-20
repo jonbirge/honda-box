@@ -3,11 +3,13 @@ services:
   web:
     build: .
     ports:
-     - "127.0.0.1:8000:8000"
+     - "127.0.0.1:5000:5000"
     volumes:
+     - ./:/app/
      - honda_box:/data/boxes
     tmpfs:
      - /tmp
+    command: python app.py
   redis:
     image: "redis:alpine"
     volumes:
