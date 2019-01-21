@@ -16,7 +16,7 @@ PIN_DIGITS = 10
 HONDA_RES = {
     "Civic": "WGA",
     "Clarity": "WGA",
-    "2018-later Accord": "720p",
+    "2018-2019 Accord": "720p",
     "Pre-2018 Accord": "WGA",
     "2019 Pilot": "720p",
     "Pre-2019 Pilot": "WGA"
@@ -87,7 +87,7 @@ def upload_file():
         scaledimage = auto_scale(origimage, HONDA_RES[car])
         scaledimage.save(finalfile, 'JPEG')
         os.remove(tmpfile)
-        cache.incr('uploads')
+        cache.incr('upload_goods')
         boxurl = request.url_root + 'data/boxes/' + userpin
         return render_template('success.html',
             filename=filename, car=car, url=boxurl)
@@ -101,7 +101,7 @@ def upload_file():
         return render_template('upload.html',
             cars=carlist, thecar=session['car'], pin=session['pin'])
 
-def redisint(cache, key):
+def redisint(key, cache=cache):
     getkey = cache.get(key)
     if getkey is None:
         return 0
@@ -110,12 +110,13 @@ def redisint(cache, key):
 
 @app.route('/stats')
 def stats():
-    mains = redisint(cache, 'main_gets')
-    uploads = redisint(cache, 'uploads')
-    tries = redisint(cache, 'upload_gets')
+    mains = redisint('main_gets')
+    upload_goods = redisint('upload_goods')
+    upload_gets = redisint('upload_gets')
+    upload_tries = redisint('upload_tries')
     return render_template('stats.html',
-        statreads=cache.incr('stat_gets'), mainloads=mains,
-        uploads=uploads, tries=tries)
+      statreads=cache.incr('stat_gets'), mainloads=mains,
+      upload_goods=upload_goods, upload_tries=upload_tries, upload_gets=upload_gets)
 
 @app.route('/box')
 @app.route('/box/')
