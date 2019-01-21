@@ -6,7 +6,15 @@ body {
   font-size: 120%;
 }
 a { color: skyblue; }
-h1, h2, h3 { color: white; }
+h1, h2, h3 {
+  color: white;
+  margin-top: 16pt;
+  margin-bottom: 6pt;
+}
+p {
+  margin-top: 6pt;
+  margin-bottom: 12pt;
+}
 input {
   padding: 6px;
   margin: 4px;
@@ -39,20 +47,22 @@ input[type=submit] {
     font-size: 250%;
   }
   input {
-    padding: 8px;
+    padding: 24px 24px;
     font-size: 100%;
     width: 100%;
   }
   select {
     padding: 8px 16px;
+    margin-top: 32px;
     background-color: #000000;
     font-size: 100%;
   }
   input[type=submit] {
-    padding: 16px 24px;
+    margin-top: 32px;
+    padding: 16px 32px;
     font-weight: bold;
     background-color: #407040;
-    border-radius: 2px;
+    border-radius: 0px;
     font-size: 100%;
   }
 }
