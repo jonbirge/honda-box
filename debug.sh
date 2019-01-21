@@ -4,4 +4,5 @@ docker-compose -f $COMPOSE_FILE down
 docker-compose -f $COMPOSE_FILE build
 docker-compose -f $COMPOSE_FILE up
 docker-compose -f $COMPOSE_FILE down
+echo "Cleaning up..."
 rm -rf __pycache__
