@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <title>Goto box</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<h1><a href="/">Honda Box</a></h1>
+<h2>Go to box</h2>
+
+<form method=post>
+  <p><b>User box:</b>
+    <input type=text name=pin value={{ pin }}>
+  </p>
+  <p><input type=submit value='Go to box'></p>
+</form>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+  {% for message in messages %}
+  <li><b><font color="red">{{ message }}</font></b></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+</body>
+</html>
