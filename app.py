@@ -13,6 +13,7 @@ CONTENT_LENGTH = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
 SECRET_KEY = 'viadelamesatemeculaca'
 PIN_DIGITS = 10
+MIN_PIN_LEN = 6
 HONDA_RES = {
     "Civic": "WGA",
     "Clarity": "WGA",
@@ -28,12 +29,18 @@ cache = redis.Redis(host='redis', port=6379)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
 app.config['MAX_CONTENT_LENGTH'] = CONTENT_LENGTH
 app.secret_key = SECRET_KEY
+
+# AutoIndex configuration
 files_index = AutoIndex(app, '/data', add_url_rules=False)
 
 @app.route('/')
 def index():
     cache.incr('main_gets')
     return render_template('index.html')
+
+@app.route('/instruct')
+def instruct():
+    return render_template('instruct.html')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -59,7 +66,7 @@ def upload_file():
                 flash('Bad file type')
                 problems += 1
         userpin = request.form['pin']
-        if len(userpin) < 6:
+        if len(userpin) < MIN_PIN_LEN:
             flash('PIN is too short')
             problems += 1
         else:
@@ -101,6 +108,38 @@ def upload_file():
         return render_template('upload.html',
             cars=carlist, thecar=session['car'], pin=session['pin'])
 
+@app.route('/box', methods=['GET', 'POST'])
+def goto_box():
+    if request.method == 'POST': # POST method handler
+        userpin = request.form['pin']
+        if len(userpin) < 6:
+            flash('PIN is too short')
+            return redirect(request.url)
+        boxpath = '/data/boxes/' + userpin
+        session['pin'] = userpin
+        return redirect(boxpath)
+    else: # GET method handler
+        if  'pin' in session:
+            default_pin = session['pin']
+        else:
+            default_pin =''
+        return render_template('download.html', pin=default_pin)
+
+@app.route('/data/<path:path>')
+def autoindex(path='.'):
+    try:
+        return files_index.render_autoindex(path)
+    except:
+        thebox = 'data/' + path
+        return render_template('missing.html', box=thebox)
+
+@app.route('/data')
+@app.route('/data/')
+@app.route('/data/boxes')
+@app.route('/data/boxes/')
+def static_files():
+    return redirect('/box')
+
 def redisint(key, cache=cache):
     getkey = cache.get(key)
     if getkey is None:
@@ -117,25 +156,6 @@ def stats():
     return render_template('stats.html',
       statreads=cache.incr('stat_gets'), mainloads=mains,
       upload_goods=upload_goods, upload_tries=upload_tries, upload_gets=upload_gets)
-
-@app.route('/box')
-@app.route('/box/')
-def default_files():
-    if 'pin' in session:
-        return redirect('/data/boxes/' + session['pin'])
-    else:
-        return 'No files uploaded yet.'
-
-@app.route('/data')
-@app.route('/data/')
-@app.route('/data/boxes')
-@app.route('/data/boxes/')
-def static_files():
-    return redirect('.')
-
-@app.route('/data/<path:path>')
-def autoindex(path='.'):
-    return files_index.render_autoindex(path)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 5000, debug = True)

@@ -1,29 +1,19 @@
 <!doctype html>
 <html>
 <head>
-  <title>Upload background picture</title>
+  <title>Goto box</title>
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <h1><a href="/">Honda Box</a></h1>
-<h2>Create background image</h2>
+<h2>Open box</h2>
 
-<form method=post enctype=multipart/form-data>
+<form method=post>
   <p><b>User box:</b>
     <input type=number name=pin value={{ pin }}>
     PIN used to retrieve your files
   </p>
-  <p><b>Picture:</b> <input type=file name=file></p>
-  <p><b>Honda model:</b> <select name="model">
-    {% for car in cars %}
-    {% if car == thecar %}
-    <option selected>{{ car }}</option>
-    {% else %}
-    <option>{{ car }}</option>
-    {% endif %}
-    {% endfor %}
-  </select></p>
-  <p><input type=submit value='Process File'></p>
+  <p><input type=submit value='Go to box'></p>
 </form>
 
 {% with messages = get_flashed_messages() %}
@@ -35,5 +25,6 @@
 </ul>
 {% endif %}
 {% endwith %}
+
 </body>
 </html>

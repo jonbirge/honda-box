@@ -1,7 +1,8 @@
-contact info and domain e-mail (webmaster)
 advertise on Facebook
 
 show cropped document on success page
+confirm gunicorn isn't logging
+custom file display and thumbnails
 cron job to clean up old files
 use JS file cropping interface
 use Flask-Uploads extension
