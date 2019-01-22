@@ -35,6 +35,10 @@ def index():
     cache.incr('main_gets')
     return render_template('index.html')
 
+@app.route('/instruct')
+def instruct():
+    return render_template('instruct.html')
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -135,7 +139,11 @@ def static_files():
 
 @app.route('/data/<path:path>')
 def autoindex(path='.'):
-    return files_index.render_autoindex(path)
+    try:
+        page = files_index.render_autoindex(path)
+    except:
+        page = 'No files uploaded to that box yet.'
+    return page
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 5000, debug = True)
