@@ -29,6 +29,8 @@ cache = redis.Redis(host='redis', port=6379)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
 app.config['MAX_CONTENT_LENGTH'] = CONTENT_LENGTH
 app.secret_key = SECRET_KEY
+
+# AutoIndex configuration
 files_index = AutoIndex(app, '/data', add_url_rules=False)
 
 @app.route('/')
@@ -114,6 +116,7 @@ def goto_box():
             flash('PIN is too short')
             return redirect(request.url)
         boxpath = '/data/boxes/' + userpin
+        session['pin'] = userpin
         return redirect(boxpath)
     else: # GET method handler
         if  'pin' in session:
@@ -122,20 +125,20 @@ def goto_box():
             default_pin =''
         return render_template('download.html', pin=default_pin)
 
+@app.route('/data/<path:path>')
+def autoindex(path='.'):
+    try:
+        return files_index.render_autoindex(path)
+    except:
+        thebox = 'data/' + path
+        return render_template('missing.html', box=thebox)
+
 @app.route('/data')
 @app.route('/data/')
 @app.route('/data/boxes')
 @app.route('/data/boxes/')
 def static_files():
     return redirect('/box')
-
-@app.route('/data/<path:path>')
-def autoindex(path='.'):
-    try:
-        page = files_index.render_autoindex(path)
-    except:
-        page = 'No files uploaded to that box yet.'
-    return page
 
 def redisint(key, cache=cache):
     getkey = cache.get(key)
