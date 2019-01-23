@@ -44,7 +44,7 @@ input[type=submit] {
 @media only screen and (max-device-width: 960px) {
   body {
     background-color: black;
-    font-size: 250%;
+    font-size: 150%;
   }
   input {
     padding: 24px 24px;
@@ -64,5 +64,11 @@ input[type=submit] {
     background-color: #407040;
     border-radius: 0px;
     font-size: 100%;
+  }
+}
+@media only screen and (max-device-width: 640px) {
+  body {
+    background-color: black;
+    font-size: 250%;
   }
 }
