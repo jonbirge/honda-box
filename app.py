@@ -110,6 +110,7 @@ def upload_file():
 
 @app.route('/box', methods=['GET', 'POST'])
 def goto_box():
+    cache.incr('download_gets')
     if request.method == 'POST': # POST method handler
         userpin = request.form['pin']
         if len(userpin) < 6:
@@ -128,8 +129,11 @@ def goto_box():
 @app.route('/data/<path:path>')
 def autoindex(path='.'):
     try:
+        cache.incr('download_tries')
+        cache.incr('download_goods')  # assume we succeed...
         return files_index.render_autoindex(path)
     except:
+        cache.decr('download_goods')  # ...until we don't
         thebox = 'data/' + path
         return render_template('missing.html', box=thebox)
 
@@ -153,9 +157,13 @@ def stats():
     upload_goods = redisint('upload_goods')
     upload_gets = redisint('upload_gets')
     upload_tries = redisint('upload_tries')
+    download_goods = redisint('download_goods')
+    download_gets = redisint('download_gets')
+    download_tries = redisint('download_tries')
     return render_template('stats.html',
       statreads=cache.incr('stat_gets'), mainloads=mains,
-      upload_goods=upload_goods, upload_tries=upload_tries, upload_gets=upload_gets)
+      upload_goods=upload_goods, upload_tries=upload_tries, upload_gets=upload_gets,
+      download_goods=download_goods, download_tries=download_tries, download_gets=download_gets)
 
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 5000, debug = True)
