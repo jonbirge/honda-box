@@ -1,4 +1,4 @@
-# this is an official Python runtime
+# start with official Python runtime
 FROM python:3.7-slim
 
 # set the working directory in the container to /app
@@ -10,7 +10,7 @@ COPY reqs.txt /app/reqs.txt
 # install python packages
 RUN pip install --trusted-host pypi.python.org -r reqs.txt
 
-# move static content
+# add the static content to a data directory
 RUN mkdir /data
 COPY ./default /data/static
 
@@ -20,5 +20,5 @@ EXPOSE 8000
 # Container will run Flask behind gunicorn with two workers
 CMD ["gunicorn", "--workers=2", "-b 0.0.0.0:8000", "app:app"]
 
-# add the current code to the container as /app
+# add the code to the container as /app
 COPY . /app
