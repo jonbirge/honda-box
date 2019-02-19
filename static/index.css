@@ -6,9 +6,10 @@ a:visited {
 }
 body, table {
   font-family: sans-serif;
-  font-size: 100%;
+  font-size: 120%;
   color: #fff;
   background: #000;
+  margin: 32px 128px;
 }
 table {
   margin-left: auto;
@@ -45,7 +46,7 @@ thead {
   color: #fff;
 }
 th {
-  font-size: 12px;
+  font-size: 13px;
   height: 30px;
   background: #000;
   color: #fff;
@@ -74,7 +75,7 @@ td {
 }
 td a {
   margin-right: 40px;
-  font-size: 125%;
+  font-size: 150%;
 }
 td.modified {
   text-align: center;
@@ -101,13 +102,18 @@ address {
   color: #fff;
   text-align: right;
 }
+
 @media only screen and (max-device-width: 960px) {
+  body, table {
+    font-size: 100%;
+    margin: 8px;
+  }
   td a {
-    margin-right: 40px;
-    font-size: 200%;
+    margin-right: 5px;
+    font-size: 150%;
   }
   .breadcrumb h1 {
-    font-size: 200%;
+    font-size: 125%;
     font-weight: normal;
     padding: 6px;
     background: #000;
