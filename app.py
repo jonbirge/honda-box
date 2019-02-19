@@ -108,6 +108,7 @@ def upload_file():
         return render_template('upload.html',
             cars=carlist, thecar=session['car'], pin=session['pin'])
 
+@app.route('/box/', methods=['GET', 'POST'])
 @app.route('/box', methods=['GET', 'POST'])
 def goto_box():
     cache.incr('download_gets')

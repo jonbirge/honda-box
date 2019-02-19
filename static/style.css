@@ -2,8 +2,8 @@ body {
   background-color: #202220;
   color: lightgray;
   font-family: sans-serif;
-  margin: 32px;
-  font-size: 120%;
+  margin: 64px;
+  font-size: 150%;
 }
 a { color: skyblue; }
 h1, h2, h3 {
@@ -41,34 +41,34 @@ input[type=submit] {
   font-size: 100%;
   border-radius: 4px;
 }
+
 @media only screen and (max-device-width: 960px) {
   body {
     background-color: black;
-    font-size: 150%;
+    font-size: 100%;
+    margin: 16px;
   }
   input {
-    padding: 24px 24px;
     font-size: 100%;
-    width: 100%;
   }
   select {
-    padding: 8px 16px;
-    margin-top: 32px;
     background-color: #000000;
     font-size: 100%;
   }
   input[type=submit] {
-    margin-top: 32px;
-    padding: 16px 32px;
+    margin-top: 8px;
+    padding: 16px 24px;
     font-weight: bold;
     background-color: #407040;
     border-radius: 0px;
+    width: 100%;
     font-size: 100%;
   }
 }
+
 @media only screen and (max-device-width: 640px) {
-  body {
-    background-color: black;
-    font-size: 250%;
+  li {
+    margin-top: 12pt;
+    margin-bottom: 12pt;
   }
 }
