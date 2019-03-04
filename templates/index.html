@@ -18,17 +18,21 @@ and makes it available on a webpage only you can access. For more information
 and a demo of this in action, see the instructions page: </p>
 
 <ul>
-<li><a href="instruct">Full instructions</a></li>
+<li><a href="/static/instruct.html">Full instructions</a></li>
 </ul>
 
 <h2>Upload backgrounds</h2>
 <ul>
-  <li><a href="upload">Upload your own images</a></li>
-  <li><a href="box">Retrieve your processed images</a></li>
+  <li><a href="upload">Upload images for processing</a></li>
+  <li><a href="box">Retrieve processed images from box</a></li>
+  {% if pin %}
+  <li><a href="data/boxes/{{pin}}">Retrieve processed images from last box ({{pin}})</a></li>
+  {% endif %}
+  <li><a href="makecolor">Create solid color background</a></li>
 </ul>
 
 <h2>Stock backgrounds</h2>
-<p>A few free images scaled for Honda infotainment screens:</p>
+<p>A handful of free images scaled for Honda infotainment screens:</p>
 <p><ul>
   <li><a href="data/static/nature">Nature</a></li>
   <li><a href="data/static/cities">Cities</a></li>

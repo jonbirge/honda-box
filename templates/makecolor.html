@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+  <title>Pure color background picture</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<h1><a href="/">HondaBox</a></h1>
+<h2>Create solid color background</h2>
+
+<form method=post enctype=multipart/form-data>
+  <p><b>User box:</b>
+    <input type=number name=pin value={{ pin }}>
+    PIN used to retrieve your files
+  </p>
+  <p><b>Color:</b> <input type="text" name="color" id="custom" value="rgb(0,0,0)"></p>
+  <script>
+  $("#custom").spectrum({
+    color: "#000",
+    showPalette: true,
+    showSelectionPalette: true,
+    palette: [ ],
+    maxSelectionSize: 9,
+    hideAfterPaletteSelect:true,
+    preferredFormat: "rgb",
+    localStorageKey: "spectrum.hondabox"
+  });
+  </script>
+  <p><b>File name:</b> <input type="text" name="filename" value={{ defname }}></p>
+  <p><b>Honda model:</b> <select name="model">
+    {% for car in cars %}
+    {% if car == thecar %}
+    <option selected>{{ car }}</option>
+    {% else %}
+    <option>{{ car }}</option>
+    {% endif %}
+    {% endfor %}
+  </select></p>
+  <p><input type=submit value='Make Background'></p>
+</form>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul class=flashes>
+  {% for message in messages %}
+  <li><b><font color="white">{{ message }}</font></b></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+</body>
+</html>

@@ -1,12 +1,12 @@
 import os
-from random import randint
+import redis
 from flask import Flask, flash, request, redirect
 from flask import send_from_directory, render_template, session
 from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
+from random import randint
 from PIL import Image
-import redis
-from autoscale import auto_scale
+from hondabox import auto_scale, solid_color
 
 UPLOAD_BASE = '/data/boxes/'
 CONTENT_LENGTH = 10 * 1024 * 1024
@@ -36,11 +36,11 @@ files_index = AutoIndex(app, '/data', add_url_rules=False)
 @app.route('/')
 def index():
     cache.incr('main_gets')
-    return render_template('index.html')
-
-@app.route('/instruct')
-def instruct():
-    return render_template('instruct.html')
+    if 'pin' in session:
+        default_pin = session['pin']
+    else:
+        default_pin = None
+    return render_template('index.html', pin = default_pin)
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -48,6 +48,47 @@ def allowed_file(filename):
 
 def random_pin():
     return str(randint(10**(PIN_DIGITS - 1), 10**PIN_DIGITS - 1))
+
+@app.route('/makecolor', methods=['GET', 'POST'])
+def make_color():
+    if request.method == 'POST': # POST method handler
+        ### check for errors...
+        car = request.form['model']
+        session['car'] = car
+        color = request.form['color']
+        userpin = request.form['pin']
+        rawfilename = request.form['filename']
+        if len(userpin) < MIN_PIN_LEN:
+            flash('PIN is too short')
+        else:
+            session['pin'] = userpin
+        if len(rawfilename) < 3:
+            flash('Filename is too short')
+
+        ### handle request
+        filename = secure_filename(rawfilename) + '.jpeg'
+        fullpath = os.path.join(app.config['UPLOAD_BASE'], userpin)
+        try:
+            os.mkdir(fullpath)
+        except:
+            pass  # we don't care!
+        finalfile = os.path.join(fullpath, filename)
+
+        ### process file
+        colorimage = solid_color(color, HONDA_RES[car])
+        colorimage.save(finalfile, 'JPEG')
+
+        flash('Color chosen: ' + color)
+        flash('Background file created: ' + filename)
+        return redirect(request.url)
+    else: # GET method handler
+        if not 'pin' in session:
+            session['pin'] = random_pin()
+        if not 'car' in session:
+            session['car'] = next(iter(HONDA_RES.keys()))
+        carlist = list(HONDA_RES.keys())
+        return render_template('makecolor.html',
+            cars=carlist, thecar=session['car'], pin=session['pin'], defname=random_pin())
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -166,5 +207,6 @@ def stats():
       upload_goods=upload_goods, upload_tries=upload_tries, upload_gets=upload_gets,
       download_goods=download_goods, download_tries=download_tries, download_gets=download_gets)
 
+# running debug server
 if __name__ == "__main__":
     app.run("0.0.0.0", port = 5000, debug = True)

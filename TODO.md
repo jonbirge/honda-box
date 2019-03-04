@@ -1,6 +1,7 @@
 # TODO
 
 - use inherited template to deal with meta stuff
+- rename index.css to autoindex.css
 - allow upload of links
 - show cropped document on success page
 - confirm gunicorn isn't logging

@@ -1,13 +1,15 @@
-# autoscale.py
+# hondabox.py
 
 from PIL import Image
 
+RES_LIST = {
+    '720p': (1280, 720),
+    'WGA': (800, 480),
+    'VGA': (640, 480)
+}
+
 def auto_scale(origimage, resolution):
-    """Scale origimage according to resolution in {'720p', 'WGA'}"""
-    RES_LIST = {
-        "720p": (1280, 720),
-        "WGA": (800, 480)
-    }
+    """Scale origimage according to resolution string"""
     final_width, final_height = RES_LIST[resolution]
     final_aspect = final_width/final_height
     width, height = origimage.size
@@ -22,4 +24,10 @@ def auto_scale(origimage, resolution):
         intimage = origimage.resize((final_width, int_height), Image.ANTIALIAS)
         extray = int_height - final_height
         finalimage = intimage.crop((0, extray//2, final_width, int_height - extray//2))
+    return finalimage
+
+def solid_color(color, resolution):
+    """Create image of color string according to resolution string"""
+    size = RES_LIST[resolution]
+    finalimage = Image.new('RGB', size, color)
     return finalimage
