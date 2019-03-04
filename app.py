@@ -42,10 +42,6 @@ def index():
         default_pin = None
     return render_template('index.html', pin = default_pin)
 
-@app.route('/instruct')
-def instruct():
-    return render_template('instruct.html')
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
