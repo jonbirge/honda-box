@@ -4,7 +4,7 @@ from PIL import Image
 
 RES_LIST = {
     '720p': (1280, 720),
-    'WGA': (800, 480)
+    'WGA': (800, 480),
     'VGA': (640, 480)
 }
 
