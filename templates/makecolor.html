@@ -17,10 +17,10 @@
     <input type=number name=pin value={{ pin }}>
     PIN used to retrieve your files
   </p>
-  <p><b>Color:</b> <input type="text" name="color" id="custom"></p>
+  <p><b>Color:</b> <input type="text" name="color" id="custom" value="rgb(0,0,0)"></p>
   <script>
   $("#custom").spectrum({
-    color: "#111",
+    color: "#000",
     showPalette: true,
     showSelectionPalette: true,
     palette: [ ],
@@ -28,7 +28,7 @@
     hideAfterPaletteSelect:true,
     preferredFormat: "rgb",
     localStorageKey: "spectrum.hondabox"
-  });
+  });s
   </script>
   <p><b>File name:</b> <input type="text" name="filename" value={{ defname }}></p>
   <p><b>Honda model:</b> <select name="model">
