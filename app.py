@@ -36,11 +36,11 @@ files_index = AutoIndex(app, '/data', add_url_rules=False)
 @app.route('/')
 def index():
     cache.incr('main_gets')
-    return render_template('index.html')
-
-@app.route('/instruct')
-def instruct():
-    return render_template('instruct.html')
+    if 'pin' in session:
+        default_pin = session['pin']
+    else:
+        default_pin = None
+    return render_template('index.html', pin = default_pin)
 
 def allowed_file(filename):
     return '.' in filename and \
