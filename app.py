@@ -53,11 +53,11 @@ def redisint(key, cache=cache):
 @app.route('/')
 def index():
     cache.incr('main_gets')
-    # if 'pin' in session:
-    #     default_pin = session['pin']
-    # else:
-    #     default_pin = None
-    return render_template('index.html', pin = session['pin'])
+    if 'pin' in session:
+        default_pin = session['pin']
+    else:
+        default_pin = None
+    return render_template('index.html', pin = default_pin)
 
 @app.route('/makecolor', methods=['GET', 'POST'])
 def make_color():
