@@ -23,7 +23,7 @@ HONDA_RES = {
     "Pre-2019 Pilot": "WGA"
 }
 
-# app configuration
+# Configuration
 app = Flask(__name__)
 cache = redis.Redis(host='redis', port=6379)
 app.config['UPLOAD_BASE'] = UPLOAD_BASE
@@ -33,6 +33,22 @@ app.secret_key = SECRET_KEY
 # AutoIndex configuration
 files_index = AutoIndex(app, '/data', add_url_rules=False)
 
+# Utility functions
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def random_pin():
+    return str(randint(10**(PIN_DIGITS - 1), 10**PIN_DIGITS - 1))
+
+def redisint(key, cache=cache):
+    getkey = cache.get(key)
+    if getkey is None:
+        return 0
+    else:
+        return int(getkey)
+
+# Endpoints
 @app.route('/')
 def index():
     cache.incr('main_gets')
@@ -41,13 +57,6 @@ def index():
     else:
         default_pin = None
     return render_template('index.html', pin = default_pin)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def random_pin():
-    return str(randint(10**(PIN_DIGITS - 1), 10**PIN_DIGITS - 1))
 
 @app.route('/makecolor', methods=['GET', 'POST'])
 def make_color():
@@ -185,13 +194,6 @@ def autoindex(path='.'):
 @app.route('/data/boxes/')
 def static_files():
     return redirect('/box')
-
-def redisint(key, cache=cache):
-    getkey = cache.get(key)
-    if getkey is None:
-        return 0
-    else:
-        return int(getkey)
 
 @app.route('/stats')
 def stats():
