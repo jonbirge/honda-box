@@ -26,7 +26,7 @@ and a demo of this in action, see the instructions page: </p>
   <li><a href="upload">Upload images for processing</a></li>
   <li><a href="box">Retrieve processed images from box</a></li>
   {% if pin %}
-  <li><a href="data/boxes/{{pin}}">Retrieve processed images from last box ({{pin}})</a></li>
+  <li><a href="data/boxes/{{pin}}?sort_by=modified&order=desc">Retrieve processed images from last box ({{pin}})</a></li>
   {% endif %}
   <li><a href="makecolor">Create solid color background</a></li>
 </ul>
