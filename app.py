@@ -14,6 +14,7 @@ ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
 SECRET_KEY = 'viadelamesatemeculaca'
 PIN_DIGITS = 10
 MIN_PIN_LEN = 6
+AUTO_INDEX_OPTIONS = '?sort_by=modified&order=desc'
 HONDA_RES = {
     "Civic": "WGA",
     "Clarity": "WGA",
@@ -52,11 +53,11 @@ def redisint(key, cache=cache):
 @app.route('/')
 def index():
     cache.incr('main_gets')
-    if 'pin' in session:
-        default_pin = session['pin']
-    else:
-        default_pin = None
-    return render_template('index.html', pin = default_pin)
+    # if 'pin' in session:
+    #     default_pin = session['pin']
+    # else:
+    #     default_pin = None
+    return render_template('index.html', pin = session['pin'])
 
 @app.route('/makecolor', methods=['GET', 'POST'])
 def make_color():
@@ -167,7 +168,7 @@ def goto_box():
         if len(userpin) < 6:
             flash('PIN is too short')
             return redirect(request.url)
-        boxpath = '/data/boxes/' + userpin
+        boxpath = '/data/boxes/' + userpin + AUTO_INDEX_OPTIONS
         session['pin'] = userpin
         return redirect(boxpath)
     else: # GET method handler
