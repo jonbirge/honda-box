@@ -9,10 +9,6 @@ RES_LIST = {
     'VGA': (640, 480)
 }
 
-RES_DICT = {}
-for thekey in RES_LIST:
-    RES_DICT['thekey'] = 'thekey'
-
 def auto_scale(origimage, resolution):
     """Scale origimage according to resolution string"""
     final_width, final_height = RES_LIST[resolution]
