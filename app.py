@@ -99,7 +99,6 @@ def make_color():
         colorimage = solid_color(color, HONDA_RES[car])
         colorimage.save(finalfile, 'JPEG')
 
-        flash('Color chosen: ' + color)
         flash('Background file created: ' + filename)
         return redirect(request.url)
     else: # GET method handler
