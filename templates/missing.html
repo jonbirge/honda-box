@@ -1,16 +1,8 @@
-<!doctype html>
-<html>
-<head>
-  <title>Wrong box</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Box not found{% endblock %}
 
-  <h1><a href="/">HondaBox</a></h1>
-  <h2>Box not found</h2>
+{% block content %}
+<h2>Box not found</h2>
 
-  <p>There is nothing uploaded to <b>{{ box }}</b> yet.</p>
-
-</body>
-</html>
+<p>There is nothing uploaded to <b>{{ box }}</b> yet.</p>
+{% endblock %}

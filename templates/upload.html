@@ -1,12 +1,7 @@
-<!doctype html>
-<html>
-<head>
-  <title>Upload background picture</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<h1><a href="/">HondaBox</a></h1>
+{% extends "base.html" %}
+{% block title %}Upload picture{% endblock %}
+
+{% block content %}
 <h2>Upload background image</h2>
 
 <form method=post enctype=multipart/form-data>
@@ -26,15 +21,4 @@
   </select></p>
   <p><input type=submit value='Process File'></p>
 </form>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-  {% for message in messages %}
-  <li><b><font color="red">{{ message }}</font></b></li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-</body>
-</html>
+{% endblock %}

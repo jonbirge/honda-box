@@ -1,12 +1,7 @@
-<!doctype html>
-<html>
-<head>
-<title>Upload success</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<h1><a href="/">HondaBox</a></h1>
+{% extends "base.html" %}
+{% block title %}Upload success{% endblock %}
+
+{% block content %}
 <h2>Image uploaded</h2>
 <p>Successfully uploaded and processed <b>{{ filename }}</b> as a
   <b>{{ car }}</b> background.
@@ -17,5 +12,4 @@
 </p>
 <p><a href="upload">Upload another file</a>
 </p>
-</body>
-</html>
+{% endblock %}

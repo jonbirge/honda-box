@@ -1,14 +1,7 @@
-<!doctype html>
-<html>
-<head>
-  <title>HondaBox</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <meta name="google-site-verification" content="e1WGKVNHw4_ClsUyUCH93NMtyV8nXeOisWkThafpxXc"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}HondaBox{% endblock %}
 
-<h1>HondaBox</h1>
+{% block content %}
 <h2>Instructions</h2>
 
 <p>This site makes it (somewhat) easy to move pictures from your phone or
@@ -18,7 +11,7 @@ and makes it available on a webpage only you can access. For more information
 and a demo of this in action, see the instructions page: </p>
 
 <ul>
-<li><a href="/static/instruct.html">Full instructions</a></li>
+<li><a href="/static/instruct.html">Full instructions and demo</a></li>
 </ul>
 
 <h2>Upload backgrounds</h2>
@@ -51,8 +44,6 @@ any issues or suggestions for improvements, though. You can reach me at
 <p>Any photo uploaded can only be accessed from the internet by providing the
 PIN you provided during upload. However, the files are not stored in encrypted
 form, and anybody who gains or has system priviledges on the server will be able
-to see the pictures. In other words, don't upload anything illegal or sensitive.
+to see the pictures. In other words, don't upload anything illegal or sensitive!
 </p>
-
-</body>
-</html>
+{% endblock %}
