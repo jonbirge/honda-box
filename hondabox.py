@@ -3,10 +3,15 @@
 from PIL import Image
 
 RES_LIST = {
+    '1080p': (1920, 1080),
     '720p': (1280, 720),
-    'WGA': (800, 480),
+    'WVGA': (800, 480),
     'VGA': (640, 480)
 }
+
+RES_DICT = {}
+for thekey in RES_LIST:
+    RES_DICT['thekey'] = 'thekey'
 
 def auto_scale(origimage, resolution):
     """Scale origimage according to resolution string"""
