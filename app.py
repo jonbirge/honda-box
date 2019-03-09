@@ -21,10 +21,16 @@ HONDA_RES = {
     "Accord (Pre-2018)": "WVGA",
     "Civic": "WVGA",
     "Clarity": "WVGA",
-    "Pilot (2019-Present)": "720p",
-    "Pilot (Pre-2019)": "WVGA",
+    "CR-V": "WVGA",
+    "Fit": "WVGA",
+    "HR-V": "WVGA",
+    "Insight": "WVGA",
+    "Passport": "720p",
     "Odyssey (2019-Present)": "720p",
     "Odyssey (Pre-2019)": "WVGA",
+    "Pilot (2019-Present)": "720p",
+    "Pilot (Pre-2019)": "WVGA",
+    "Ridgeline": "WVGA",
 }
 for thekey in RES_LIST:
     HONDA_RES[thekey] = thekey
