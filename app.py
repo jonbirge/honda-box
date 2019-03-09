@@ -6,8 +6,9 @@ from flask_autoindex import AutoIndex
 from werkzeug.utils import secure_filename
 from random import randint
 from PIL import Image
-from hondabox import auto_scale, solid_color
+from hondabox import RES_LIST, auto_scale, solid_color
 
+# Constants & parameters
 UPLOAD_BASE = '/data/boxes/'
 CONTENT_LENGTH = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = set(['jpg', 'png', 'jpeg', 'gif'])
@@ -16,13 +17,23 @@ PIN_DIGITS = 10
 MIN_PIN_LEN = 6
 AUTO_INDEX_OPTIONS = '?sort_by=modified&order=desc'
 HONDA_RES = {
-    "Civic": "WGA",
-    "Clarity": "WGA",
-    "2018-2019 Accord": "720p",
-    "Pre-2018 Accord": "WGA",
-    "2019 Pilot": "720p",
-    "Pre-2019 Pilot": "WGA"
+    "Accord (2018-Present)": "720p",
+    "Accord (Pre-2018)": "WVGA",
+    "Civic": "WVGA",
+    "Clarity": "WVGA",
+    "CR-V": "WVGA",
+    "Fit": "WVGA",
+    "HR-V": "WVGA",
+    "Insight": "WVGA",
+    "Passport": "720p",
+    "Odyssey (2019-Present)": "720p",
+    "Odyssey (Pre-2019)": "WVGA",
+    "Pilot (2019-Present)": "720p",
+    "Pilot (Pre-2019)": "WVGA",
+    "Ridgeline": "WVGA",
 }
+for thekey in RES_LIST:
+    HONDA_RES[thekey] = thekey
 
 # Configuration
 app = Flask(__name__)
@@ -88,7 +99,6 @@ def make_color():
         colorimage = solid_color(color, HONDA_RES[car])
         colorimage.save(finalfile, 'JPEG')
 
-        flash('Color chosen: ' + color)
         flash('Background file created: ' + filename)
         return redirect(request.url)
     else: # GET method handler

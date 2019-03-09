@@ -1,15 +1,13 @@
-<!doctype html>
-<html>
-<head>
-  <title>Pure color background picture</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-<h1><a href="/">HondaBox</a></h1>
+{% extends "base.html" %}
+{% block title %}Pure color background picture{% endblock %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+{% endblock %}
+
+{% block content %}
 <h2>Create solid color background</h2>
 
 <form method=post enctype=multipart/form-data>
@@ -42,15 +40,4 @@
   </select></p>
   <p><input type=submit value='Make Background'></p>
 </form>
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul class=flashes>
-  {% for message in messages %}
-  <li><b><font color="white">{{ message }}</font></b></li>
-  {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
-</body>
-</html>
+{% endblock %}
