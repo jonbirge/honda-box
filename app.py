@@ -77,29 +77,30 @@ def make_color():
         car = request.form['model']
         session['car'] = car
         color = request.form['color']
+        session['color'] = color
         userpin = request.form['pin']
         rawfilename = request.form['filename']
+        problems = 0
         if len(userpin) < MIN_PIN_LEN:
             flash('PIN is too short')
+            problems += 1
         else:
             session['pin'] = userpin
         if len(rawfilename) < 3:
             flash('Filename is too short')
-
-        ### handle request
-        filename = secure_filename(rawfilename) + '.jpeg'
-        fullpath = os.path.join(app.config['UPLOAD_BASE'], userpin)
-        try:
-            os.mkdir(fullpath)
-        except:
-            pass  # we don't care!
-        finalfile = os.path.join(fullpath, filename)
-
-        ### process file
-        colorimage = solid_color(color, HONDA_RES[car])
-        colorimage.save(finalfile, 'JPEG')
-
-        flash('Background file created: ' + filename)
+            problems += 1
+        ### handle request if ok
+        if problems == 0:
+            filename = secure_filename(rawfilename) + '.jpeg'
+            fullpath = os.path.join(app.config['UPLOAD_BASE'], userpin)
+            try:
+                os.mkdir(fullpath)
+            except:
+                pass  # we don't care!
+            finalfile = os.path.join(fullpath, filename)
+            colorimage = solid_color(color, HONDA_RES[car])
+            colorimage.save(finalfile, 'JPEG')
+            flash('Background file created: ' + filename)
         return redirect(request.url)
     else: # GET method handler
         if not 'pin' in session:
@@ -107,8 +108,13 @@ def make_color():
         if not 'car' in session:
             session['car'] = next(iter(HONDA_RES.keys()))
         carlist = list(HONDA_RES.keys())
+        if not 'color' in session:
+            default_color = 'rgb(1,0,0)'
+        else:
+            default_color = session['color']
         return render_template('makecolor.html',
-            cars=carlist, thecar=session['car'], pin=session['pin'], defname=random_pin())
+            cars=carlist, thecar=session['car'], pin=session['pin'],
+            defname=random_pin(), startcolor=default_color)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
