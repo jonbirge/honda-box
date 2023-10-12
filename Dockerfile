@@ -1,5 +1,5 @@
 # Python runtime
-FROM python:3.7-slim
+FROM python:3.8.18-slim
 
 # set the working directory in the container to /app
 WORKDIR /app
